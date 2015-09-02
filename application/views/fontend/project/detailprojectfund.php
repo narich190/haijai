@@ -377,15 +377,35 @@
 							 			}
 								}
 								
-							  echo "<a href='javascript:void(0)' onclick='openCommentBox(\"textareareplyID".$value['projectcomment_id']."\")'><i class='fa fa-reply'></i></a>
+
+							  echo "<a href='javascript:void(0)' style='float:right' onclick='openCommentBox(\"textareareplyID".$value['projectcomment_id']."\")'><i class='fa fa-reply'></i></a>
 								</div>
 								<div class='comment-content'>
 									".$value['comment_detail']."
 								</div>
 							</div>
 						</div>
-						<!-- Respuestas de los comentarios -->
-						<ul class='comments-list reply-list'>";
+						<!-- Respuestas de los comentarios -->";
+
+						$countsubcomment = 0;
+						foreach ($commentprojectdata as $key => $subcomment) {	
+							if (($subcomment['replyTo_projectcomment_id']==$value['projectcomment_id']) && ($subcomment['replyTo_projectcomment_id']!="")){
+								$countsubcomment += 1;
+							}
+						}
+
+						if($countsubcomment != 0){
+							echo "<ul class='comments-list reply-list' style='padding-top:0;margin-top:0;'>
+									<a href='javascript:void(0);' onclick=\"openSubComment('".$value['projectcomment_id']."','".$countsubcomment."')\">
+										<div style='color:white;background:#3399FF;height:30px;padding:5px;' id='hiddencomment".$value['projectcomment_id']."' >ดูความคิดเห็นย่อย ".$countsubcomment." ความคิดเห็น</div>
+									</a>
+								</ul>";
+							echo "<ul class='comments-list reply-list' id='headcomment".$value['projectcomment_id']."' style='display:none;' >";
+						}else{
+							echo "<ul class='comments-list reply-list'  >";
+						}
+
+
 
 						foreach ($commentprojectdata as $key => $subcomment) {	
 							if (($subcomment['replyTo_projectcomment_id']==$value['projectcomment_id']) && ($subcomment['replyTo_projectcomment_id']!="")){
@@ -486,7 +506,10 @@
 
 	</ul>
 
+	<!--
 	<button class="btn btn-default commentbox" style="width:100%;">เเสดงผลเพิ่มเติม</button>
+	-->
+
 
 	<!--Update-->
 	<ul id="comments-list" class="comments-list updatebox" style="display:none;">
@@ -529,8 +552,9 @@
 		}
 	?>
 	</ul>
+	<!--
 	<button class="btn btn-default updatebox" style="width:100%;display:none;">เเสดงผลเพิ่มเติม</button>
-
+	-->
 </div>
 
 <script type="text/javascript">
@@ -690,6 +714,24 @@
 	function goToRegister(){
 		alert("กรุณาทำการเข้าสู่ระบบก่อนทำการบริจาคครับ");
 		window.location.replace("<?=base_url()?>register");
+	}
+
+	function openSubComment($headcommentId,$countsubcomment){
+		//alert($headcommentId);
+		$("#headcomment"+$headcommentId).toggle( "slow", function() {
+		    // Animation complete.
+		});
+
+		//hiddencomment
+		
+
+		
+		if($("#hiddencomment"+$headcommentId).text() == ("ดูความคิดเห็นย่อย "+$countsubcomment+" ความคิดเห็น") ){
+			$("#hiddencomment"+$headcommentId).text("ซ่อนความคิดเห็นย่อย "+$countsubcomment+" ความคิดเห็น");
+		}else{
+			$("#hiddencomment"+$headcommentId).text("ดูความคิดเห็นย่อย "+$countsubcomment+" ความคิดเห็น");
+		}
+		
 	}
 
 	$(document).ready(function(){
