@@ -1,0 +1,63 @@
+/*ฝากจากหน้า overview*/
+@media only screen and (max-width:767px){
+	.projectfilter{
+		height: 180px !important;
+
+	}
+}
+
+
+.overviewproject{
+	display: inline-block;
+}
+
+
+
+
+
+/*responsive site*/
+@media only screen and (max-width:750px){
+	
+
+}
+
+/*mobile site*/
+@media only screen and (max-device-width:750px){
+	/*
+	.firstpage .col-sm-12{
+		padding-top: 100px !important;
+	}
+	.firstpage .col-sm-12 span{
+		padding-top: 100px !important;
+		font-size:100 !important;
+	}
+
+	.mainwhohaijai .col-sm-12 .col-sm-6, .maingoodhaijai .col-sm-12 .col-sm-6, .mainactivityhaijai .col-sm-12 .col-sm-6{
+		width:100%;
+	}
+	.mainwhohaijai .col-sm-12 .col-sm-6 span{
+		font-size:100px;
+	}
+
+	.mainproject{
+		display: none;
+	}
+	.mainprojectresponsive{
+		display: inline-block;
+	}
+	.mainwhohaijai .col-sm-12, .maingoodhaijai .col-sm-12, .mainactivityhaijai .col-sm-12{
+		padding-top: 2%;
+	}
+	
+    .whohaijaiimg img,.goodhaijaiimg img,.activityimg img{
+    	display: none;
+    }
+
+
+    .mainprojectresponsive #carousel-example-generic .carousel-inner .item .col-sm-4{
+    	width:100% !important;
+    	height:100% !important;
+    }
+    */
+
+}
