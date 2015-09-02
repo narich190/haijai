@@ -11,7 +11,17 @@ class project extends CI_Controller{
 		//calculate time can use
 		//calculate currently, percentage 
 		$criteriaproject_status = array('approve','success','receivemoney'); 
-		$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")->from("project p")->join("project_detail d","p.project_id = d.project_project_id")->join("project_status s","p.project_id = s.project_project_id")->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")->join("member m","p.member_member_id = m.member_id")->where_in("project_status",$criteriaproject_status)->where("block_status","no")->get()->result_array();
+		$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->order_by("project_end","asc")
+								->order_by("project_end","asc")
+								->get()->result_array();
 
 
 		$this->load->view("fontend/project/overviewpage.php",$data);
@@ -19,6 +29,105 @@ class project extends CI_Controller{
 
 	}
 
+	public function filterproject(){
+
+		$this->load->view("fontend/topandfooter/topheader.php");
+
+		$project_type = $this->input->post("project_type");
+		$project_group_projectgroup_id = $this->input->post("project_group_projectgroup_id");
+
+
+		$project_typesession = $this->session->userdata('project_typesession');
+		$project_group_projectgroup_ididsession = $this->session->userdata('project_group_projectgroup_ididsession');
+
+		if(($project_typesession == "") || ($project_typesession != $project_type )){
+			
+			$ar = array(
+					"project_typesession" => $project_type,
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+		if(($project_group_projectgroup_ididsession == "") || ($project_group_projectgroup_ididsession != $project_group_projectgroup_id )){
+			
+			$ar = array(
+					"project_group_projectgroup_ididsession" => $project_group_projectgroup_id,
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+
+
+		$data['allproject'] = '';
+
+		$criteriaproject_status = array('approve','success','receivemoney'); 
+		if($project_type == 'all' && $project_group_projectgroup_id == 'all'){// all project
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->order_by("project_end","asc")
+								->get()->result_array();
+
+
+		}else if($project_type != 'all' && $project_group_projectgroup_id == 'all'){
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_type",$project_type)
+								->order_by("project_end","asc")
+								->get()->result_array();
+
+		}
+		else if($project_type == 'all' && $project_group_projectgroup_id != 'all'){
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_group_projectgroup_id",$project_group_projectgroup_id)
+								->order_by("project_end","asc")
+								->get()->result_array();
+
+		}else{
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_type",$project_type)
+								->where("p.project_group_projectgroup_id",$project_group_projectgroup_id)
+								->order_by("project_end","asc")
+								->get()->result_array();
+
+
+		}
+
+		$this->load->view("fontend/project/overviewpage.php",$data);
+		$this->load->view("fontend/topandfooter/bottomfooter.php");
+
+	}
 
 	public function detailprojectfund($project_id){
 
@@ -53,6 +162,9 @@ class project extends CI_Controller{
 		$data['commentprojectdata'] = $this->db->select("*")->from("project_comment c")->join("member m","m.member_id = c.member_member_id")->join("project p","c.project_project_id = p.project_id")->where("project_project_id",$project_id)->order_by("comment_create","desc")->get()->result_array();
 		$data['member_logindata'] = $this->db->select("*")->from("member")->where("member_id",$member_id)->get()->row_array();
 		
+		$data['checkStaff'] = $this->db->select("*")->from("memrefproject")->where("project_id",$project_id)->where("status","ยินยอมเป็นสต๊าฟ")->get()->result_array();
+
+
 		$this->load->view("fontend/project/detailprojectfund.php",$data);
 
 		$this->load->view("fontend/topandfooter/bottomfooter.php");
@@ -873,6 +985,8 @@ class project extends CI_Controller{
 
 	}
 
+
+
 	public function overviewactivity(){
 		$this->load->view("fontend/topandfooter/topheader.php");
 
@@ -916,6 +1030,7 @@ class project extends CI_Controller{
 		->where_in("project_status",$criteriaproject_status)
 		->where("block_status","no")
 		->where("a.project_id",$project_id)
+		->order_by("activity_approved","asc")
 		->get()->result_array();
 
 		
@@ -950,6 +1065,108 @@ class project extends CI_Controller{
 		$this->load->view("fontend/project/detailactivityfund.php",$data);
 
 		$this->load->view("fontend/topandfooter/bottomfooter.php");
+
+	}
+
+	public function filteractivity(){
+
+		$this->load->view("fontend/topandfooter/topheader.php");
+
+		$project_type = $this->input->post("project_type");
+		$project_group_projectgroup_id = $this->input->post("project_group_projectgroup_id");
+
+
+		$activity_typesession = $this->session->userdata('activity_typesession');
+		$activity_project_group_projectgroup_ididsession = $this->session->userdata('activity_project_group_projectgroup_ididsession');
+
+		if(($activity_typesession == "") || ($activity_typesession != $project_type )){
+			
+			$ar = array(
+					"activity_typesession" => $project_type,
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+		if(($activity_project_group_projectgroup_ididsession == "") || ($activity_project_group_projectgroup_ididsession != $project_group_projectgroup_id )){
+			
+			$ar = array(
+					"activity_project_group_projectgroup_ididsession" => $project_group_projectgroup_id,
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+
+
+		$data['allproject'] = '';
+
+		$criteriaproject_status = array('success','receivemoney');
+
+		if($project_type == 'all' && $project_group_projectgroup_id == 'all'){// all project
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->join("activity a","a.project_id = p.project_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->get()->result_array();
+
+
+		}else if($project_type != 'all' && $project_group_projectgroup_id == 'all'){
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->join("activity a","a.project_id = p.project_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_type",$project_type)
+								->get()->result_array();
+
+		}
+		else if($project_type == 'all' && $project_group_projectgroup_id != 'all'){
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->join("activity a","a.project_id = p.project_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_group_projectgroup_id",$project_group_projectgroup_id)
+								->get()->result_array();
+
+
+		}else{
+
+			$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->join("activity a","a.project_id = p.project_id")
+								->where_in("project_status",$criteriaproject_status)
+								->where("block_status","no")
+								->where("p.project_type",$project_type)
+								->where("p.project_group_projectgroup_id",$project_group_projectgroup_id)
+								->get()->result_array();
+
+		}
+
+		$this->load->view("fontend/project/overviewactivity.php",$data);
+		$this->load->view("fontend/topandfooter/bottomfooter.php");
+
+
 
 	}
 

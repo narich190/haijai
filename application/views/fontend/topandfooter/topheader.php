@@ -114,7 +114,7 @@
 								  	<button type="submit" style="width:100%;"  class="btn btn-success">เข้าสู่ระบบ</button>
 								<?=form_close()?>
 					    		<hr>
-								<button type="submit"  style="width:100%;" class="btn btn-primary">เข้าสู่ระบบด้วย Facebook</button>
+								<a href="<?=base_url()?>register/loginfacebook"><button type="submit"  style="width:100%;" class="btn btn-primary">เข้าสู่ระบบด้วย Facebook</button></a>
 
 					    	</li>
 					    </ul>

@@ -55,60 +55,51 @@
                             </thead>
                             <div class="filterbox" style="width:100%;">
                               
-                              <?=form_open("dash/filter");?>
+                              <?=form_open("manageproject/projectFilter");?>
                                 
                               <div class="filter-box">
                                 <div class="form-group"  style="width:50%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">ประเภทโครงการ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
-                                    <option value="notchoose">-- ทั้งหมด --</option>
-                                    <option value='waiting'>ระดมสินทรัพย์</option>
-                                    <option value='success'>รับบริจาค</option>
+                                  <select class="form-control" name='project_type' id='project_typeselect' style="width:70%;float:left;" >
+                                    <option value='notchoose' selected>โครงการทั้งหมด</option>
+                                    <option value='ระดมทุน'>โครงการระดมทุน</option>
+                                    <option value='รับบริจาค'>โครงการรับบริจาค</option>
                                   </select>
                                 </div>
 
                                 <div class="form-group"  style="width:50%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">หมวดหมู่โครงการ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
-                                    <option value="notchoose">-- ทั้งหมด --</option>
-                                    <option value="children">เด็ก/สตรี/เยาวชน</option>
-                                    <option value='fundrasing'>ระดมสินทรัพย์</option>
-                                    <option value='old'>คนชรา / คนพิการ</option>
-                                    <option value='smallGroup'>ชนกลุ่มน้อย</option>
-                                    <option value='homeless'>คนไร้บ้าน / ที่อยู่อาศัย</option>
-                                    <option value='human'>สิทธิมนุษยชน</option>
-                                    <option value='animal'>สัตว์</option>
-                                    <option value='energey'>พลังงาน / สิ่งแวดล้อม</option>
-                                    <option value='education'>การศึกษา</option>
-                                    <option value='cluter'>ศาสนา / ศิลปวัฒนธรรม</option>
-                                    <option value='health'>สุขภาพ / ยา</option>
-                                    <option value='safty'>ฉุกเฉิน / ความปลอดภัย</option>
-                                    <option value='disaster'>ภัยพิบัติ</option>
-                                    <option value='computer'>คอมพิวเตอร์ / IT</option>
-                                    <option value='broadcast'>สือ / การกระจายเสียง</option>
-                                    <option value='sport'>กีฬา / สันทนาการ</option>
-                                    <option value='social'>สวัสดิการสังคทม</option>
+                                  <select class="form-control" name='project_group_projectgroup_id' id='project_group_projectgroup_idselect' style="width:70%;float:left;">
+                                    <option value='notchoose' selected>ทุกหมวดหมู่</option>
+                                    <option value='1'>เด็ก/ สตรี/ เยาวชน</option>
+                                    <option value='2'>คนชรา/ คนพิการ</option>
+                                    <option value='3'>ขนกลุ่มน้อย</opion>
+                                    <option value='4'>คนไร้บ้าน/ ที่อยู่อาศัย</opion>
+                                    <option value='5'>สิทธิมนุษยชน</opion>
+                                    <option value='6'>สัตว</opion>
+                                    <option value='7'>พลังงาน/ สิ่งแวดล้อม</opion>
+                                    <option value='8'>การศึกษา</option>
+                                    <option value='9'>ศาสนา/ ศิลปวัฒนธรรม</option>
+                                    <option value='10'>สุขภาพ/ ยา</option>
+                                    <option value='11'>ฉุกเฉิน/ ความปลอดภัย</option>
+                                    <option value='12'>ภัยพิบัติ</option>
+                                    <option value='13'>คอมพิวเตอร์/ IT</option>
+                                    <option value='14'>สื่อ/ การกระจายเสียง</option>
+                                    <option value='15'>กีฬา/ สันทนาการ</option>
+                                    <option value='16'>สวัสดิการ และ สังคม</option>
                                   </select>
+
                                 </div>
 
-                                <div class="form-group"  style="width:30%;display:inline-block;float:left;">
-                                  <label for="exampleInputEmail1" style="margin-right:10px;float:left;">สถานะ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
-                                    <option value="notchoose">-- ทั้งหมด --</option>
-                                    <option value='รอการอนุมัติ'>รอการอนุมัติ</option>
-                                    <option value='อนุมัติแล้ว'>อนุมัติแล้ว</option>
-                                    <option value='บล๊อค'>บล็อค</option>
-                                  </select>
-                                </div>
-
-                                <div class="form-group"  style="width:25%;display:inline-block;float:left;">
+                               
+                                <div class="form-group"  style="width:40%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">จากวันที่: </label>
-                                  <input type="date" name="datefromfil" class="form-control" style="width:60%;float:left;">
+                                  <input type="date" name="datefromfil" class="form-control" style="width:70%;float:left;">
                                 </div>
 
-                                <div class="form-group"  style="width:25%;display:inline-block;float:left;">
+                                <div class="form-group"  style="width:40%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">ถึงวันที่: </label>
-                                  <input type="date" name="datetofil" class="form-control" style="width:60%;float:left;">
+                                  <input type="date" name="datetofil" class="form-control" style="width:70%;float:left;">
                                 </div> 
                                 <button type="submit" style="width:15%;height:31px;line-height:12.5px;float:right;display:block;" class="btn btn-success">กรอง</button>
                               </div>

@@ -6,7 +6,7 @@
         <div class="page-head" >
             <!-- Page heading -->
             <div class="bread-crumb">
-                <span>จัดการโครงการ -> ข้อมูลคำร้องขอสร้างกิจกรรมประกาศ</span>
+                <span>จัดการโครงการ -> ข้อมูลกิจกรรมประกาศทั้งหมด</span>
             </div>
 
             <div class="clearfix"></div>
@@ -26,17 +26,11 @@
                 <div class="widget boxed">
 
                     <div class="widget-head">
-                        <h4 class="pull-left"><i class="fa fa-file-text"></i>ข้อมูลคำร้องขอสร้างกิจกรรมประกาศ</h4>
+                        <h4 class="pull-left"><i class="fa fa-file-text"></i>ข้อมูลกิจกรรมประกาศทั้งหมด</h4>
                         
                         <div class="pull-right" style="width:10%;margin-right:10px;" >
                           <button type="button" class="btn btn-default filterbutton" onClick="showfilterbox();"  style="margin:2px 10px 2px 6px;width:100%;" aria-label="Left Align">
                             <span style="align:center" aria-hidden="true">กรองข้อมูล</span>
-                          </button>
-                        </div>
-
-                        <div class="pull-right" style="width:10%;margin-right:10px;" >
-                          <button type="button" class="btn btn-danger" onClick="deldata();" style="margin:2px 10px 2px 6px;width:100%;" aria-label="Left Align">
-                            <i class="fa fa-trash-o" ></i>
                           </button>
                         </div>
 
@@ -49,54 +43,54 @@
                         <table class="table table-hover" >
                             <thead>
                             <tr>
-                                <th><i class="fa fa-trash-o"></i></th>
                                 <th>กิจกรรมประกาศ</th>
                                 <th>ประเภทโครงการ</th>
                                 <th>หมวดหมู่โครงการ</th>
                                 <th>วันที่ส่งคำร้อง</th>
                                 <th>สถานะกิจกรรมประกาศ</th>
+                                <th>บล็อค</th>
                                 <th>รายละเอียดเพิ่มเติม</th>
                             </tr>
                             </thead>
                             <div class="filterbox" style="width:100%;">
                               
-                              <?=form_open("dash/filter");?>
+                              <?=form_open("manageproject/activityfilter");?>
                                 
                               <div class="filter-box">
                                 <div class="form-group"  style="width:50%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">ประเภทโครงการ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
-                                    <option value="notchoose">-- ทั้งหมด --</option>
-                                    <option value='waiting'>ระดมสินทรัพย์</option>
-                                    <option value='success'>รับบริจาค</option>
+                                  <select class="form-control" name='project_type' id='activityfilter_project_type' style="width:70%;float:left;" >
+                                    <option value='notchoose' selected>โครงการทั้งหมด</option>
+                                    <option value='ระดมทุน'>โครงการระดมทุน</option>
+                                    <option value='รับบริจาค'>โครงการรับบริจาค</option>
                                   </select>
                                 </div>
 
                                 <div class="form-group"  style="width:50%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">หมวดหมู่โครงการ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
-                                    <option value="notchoose">-- ทั้งหมด --</option>
-                                    <option value="children">เด็ก/สตรี/เยาวชน</option>
-                                    <option value='fundrasing'>ระดมสินทรัพย์</option>
-                                    <option value='old'>คนชรา / คนพิการ</option>
-                                    <option value='smallGroup'>ชนกลุ่มน้อย</option>
-                                    <option value='homeless'>คนไร้บ้าน / ที่อยู่อาศัย</option>
-                                    <option value='human'>สิทธิมนุษยชน</option>
-                                    <option value='animal'>สัตว์</option>
-                                    <option value='energey'>พลังงาน / สิ่งแวดล้อม</option>
-                                    <option value='education'>การศึกษา</option>
-                                    <option value='cluter'>ศาสนา / ศิลปวัฒนธรรม</option>
-                                    <option value='health'>สุขภาพ / ยา</option>
-                                    <option value='safty'>ฉุกเฉิน / ความปลอดภัย</option>
-                                    <option value='disaster'>ภัยพิบัติ</option>
-                                    <option value='computer'>คอมพิวเตอร์ / IT</option>
-                                    <option value='broadcast'>สือ / การกระจายเสียง</option>
-                                    <option value='sport'>กีฬา / สันทนาการ</option>
-                                    <option value='social'>สวัสดิการสังคทม</option>
+                                  <select class="form-control" name='project_group_projectgroup_id' id='activityfilter_project_group_projectgroup_id'  style="width:70%;float:left;">
+                                    <option value='notchoose' selected>ทุกหมวดหมู่</option>
+                                    <option value='1'>เด็ก/ สตรี/ เยาวชน</option>
+                                    <option value='2'>คนชรา/ คนพิการ</option>
+                                    <option value='3'>ขนกลุ่มน้อย</opion>
+                                    <option value='4'>คนไร้บ้าน/ ที่อยู่อาศัย</opion>
+                                    <option value='5'>สิทธิมนุษยชน</opion>
+                                    <option value='6'>สัตว</opion>
+                                    <option value='7'>พลังงาน/ สิ่งแวดล้อม</opion>
+                                    <option value='8'>การศึกษา</option>
+                                    <option value='9'>ศาสนา/ ศิลปวัฒนธรรม</option>
+                                    <option value='10'>สุขภาพ/ ยา</option>
+                                    <option value='11'>ฉุกเฉิน/ ความปลอดภัย</option>
+                                    <option value='12'>ภัยพิบัติ</option>
+                                    <option value='13'>คอมพิวเตอร์/ IT</option>
+                                    <option value='14'>สื่อ/ การกระจายเสียง</option>
+                                    <option value='15'>กีฬา/ สันทนาการ</option>
+                                    <option value='16'>สวัสดิการ และ สังคม</option>
                                   </select>
+
                                 </div>
 
-                                
+                               
                                 <div class="form-group"  style="width:40%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">จากวันที่: </label>
                                   <input type="date" name="datefromfil" class="form-control" style="width:70%;float:left;">
@@ -110,10 +104,28 @@
                               </div>
                               <?=form_close();?>
 
+                              <script type="text/javascript">
+
+                                $(document).ready(function(){
+
+                                  $activityfilter_project_type = "<?=($this->session->userdata('activityfilter_project_type_ssession')!=''? $this->session->userdata('activityfilter_project_type_ssession'):'')?>";
+                                  $activityfilter_project_group_projectgroup_id = "<?=($this->session->userdata('activityfilter_project_group_projectgroup_id_ssession')!=''? $this->session->userdata('activityfilter_project_group_projectgroup_id_ssession'):'')?>";
+
+                                  if($activityfilter_project_type != '' && $activityfilter_project_group_projectgroup_id != ''){
+                                    
+                                    $("select#activityfilter_project_type option").each(function() { this.selected = (this.value == $activityfilter_project_type); });
+                                    $("select#activityfilter_project_group_projectgroup_id option").each(function() { this.selected = (this.value == $activityfilter_project_group_projectgroup_id); });
+          
+                                  }
+
+                                });
+
+                              </script>
+
                             </div>
 
                             <tbody>
-                                  <?php 
+                                   <?php 
                                     if(count($requestactivity)==0){
 
                                     }else{
@@ -122,10 +134,7 @@
                                     
                                     //print content of donation
                                       echo "<tr class='rowcontent'>";
-                                        echo "<td>";
-                                        echo "<input type='checkbox' name='checkdelete'  />";
-                                        echo "</td>";
-
+                                        
                                         echo "<td>";
                                         echo $value['project_name'];
                                         echo "</td>";
@@ -147,6 +156,11 @@
 
                                         echo "<td>";
                                         echo $value['activity_status'];
+                                        echo "</td>";
+
+
+                                        echo "<td>";
+                                        echo $value['activity_block_status'];
                                         echo "</td>";
 
 
@@ -201,9 +215,11 @@
 
                                                                 
                                                           echo "</div>";
-                                                            
-                                                            //approve or un approve
-                                                          echo "<div style='float:right;width:100%;margin-top:10px;' onClick=\"approveRequestActivity('".$value['activity_id']."','approve')\" ><input type='button' style='width:100%;'  class='btn btn-success' value='อนุมัติ' /></div>";
+                                                          if($value['activity_block_status']=="no"){ 
+                                                            echo "<div style='float:right;width:100%;margin-top:10px;' onClick=\"blockProjectManage('".$value['project_id']."','yes')\" ><input type='button' style='width:100%;'  class='btn btn-danger' value='บล็อคโครงการ' /></div>";
+                                                          }else{
+                                                            echo "<div style='float:right;width:100%;margin-top:10px;' onClick=\"blockProjectManage('".$value['project_id']."','no')\" ><input type='button' style='width:100%;'  class='btn btn-warning' value='ปลดบล็อคโครงการ' /></div>";
+                                                          }
                                                           
                                                         echo "</div>";
                                                       echo "</td>";
@@ -239,44 +255,44 @@
   
 </div>
 
-        
 
-        
 <script type="text/javascript">
 
-  function approveRequestActivity($activity_id, $action){
-
+  function blockProjectManage($project_id,$action){
+    //alert($project_id+", "+$action);
+    
     $.ajax({
-        url: "http://localhost/haijai/manageproject/approveRequestActivity",
-        type:"POST",
-        cache:false,
-        data:{
-          activity_id: $activity_id,
-          action: $action,
-        },
-        dataType:"JSON",
-        /*
-        beforeSend: function (event, files, index, xhr, handler, callBack) {
-          $.ajax({
-            async: false,
-            url: 'http://sagaso.asia/dash/bugsafari' // add path
-          });
-        },
-        */
-        success:function(result){
-          //insert project id 
-          alert(result);
-          window.location.reload();
-        },
-        error:function(err){
-          alert("ERROR : "+err);
-        }
-                      
-      });
+      url: "http://localhost/haijai/manageproject/blockProjectManage",
+      type:"POST",
+      cache:false,
+      data:{
+        project_id: $project_id,
+        action: $action,
+      },
+      dataType:"JSON",
+      /*
+      beforeSend: function (event, files, index, xhr, handler, callBack) {
+        $.ajax({
+          async: false,''
+          url: 'http://sagaso.asia/dash/bugsafari' // add path
+        });
+      },
+      */
+      success:function(result){
+        alert(result);
+        window.location.reload();
+      },
+      error:function(err){
+        alert("ERROR : "+err);
+      }
+                    
+    });  
+  
 
   }
 
 
-</script>
 
+</script>
+        
 

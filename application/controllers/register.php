@@ -1,8 +1,26 @@
 <?php
 class register extends CI_Controller{
-	public function register(){
+
+	private $uid;
+
+	private $access_token;
+
+	public function __construct()
+	{
 		parent::__construct();
+
+		$this->load->library("session");
+		$this->load->library("facebook",array(
+			"appId"=>"878498028884904",
+			"secret"=>"d90e3135b2566f7ace704f6725ccaaa9"
+			));
+		$this->uid = $this->facebook->getUser();
+		$this->access_token = $this->facebook->getAccessToken();
+		$this->facebook->setAccessToken($this->access_token);
 	}
+
+
+
 
 	public function index(){
 	
@@ -131,6 +149,14 @@ class register extends CI_Controller{
 			//--------------------------------------------------
 
 		//------------------ TODO:should to automatic login ? ------------------
+
+
+			//success login					
+    		$this->session->set_userdata('membersession', $memberdata);
+    		//keeplog
+			$this->noti->keeplog("member","เข้าสู่ระบบ ", $_SERVER['REQUEST_URI']);
+
+
 		redirect("main");
 		
 		
@@ -138,6 +164,111 @@ class register extends CI_Controller{
 
 	}
 
+
+	public function loginfacebook(){
+
+
+		if($this->uid){
+			try {
+				$me = $this->facebook->api("/me");
+				//$this->session->set_userdata("facebook",$me['id']);
+				//redirect("auth");
+
+			} catch (FacebookApiException $e) {
+					print_r($e);
+					$this->uid = NULL;
+			}
+		}else{
+			die("<script>top.location='".$this->facebook->getLoginUrl(array(
+					"scope"=>"email",
+					"redirect_url"=>site_url("auth")
+				))."'</script>");
+		}
+
+		$this->checkUserAlready($me);
+
+
+
+	}
+
+
+	public function checkUserAlready($me){
+
+		$fb_id = $me['id'];
+		$fb_name = $me['name'];
+
+		$memberfaceInfo = $this->db->select("*")->from("memfacebook")->where("fb_id",$fb_id)->get()->row_array();
+		//echo sizeof($memberfaceInfo);
+		//print_r($memberfaceInfo);
+
+		if(sizeof($memberfaceInfo) == 0){
+
+			$member_name = $fb_name;
+			$username = $fb_name."#".$fb_name;
+			$password = $fb_name."#".$fb_name;
+			$biography = "";
+			$location = "";
+			$email = '';
+			$receiveemailnews = '';
+
+			//interest table
+			$project_group_projectgroup_id = 1;
+
+
+			if($receiveemailnews != "yes"){
+				$receiveemailnews = "no";
+			}
+
+
+			//insert
+			$this->db->query("insert into member 
+			values(null, '".$member_name."', '', '".$biography."', '".$location."', '".$username."', '".$password."', '".$email."','member', 'approve', '".$receiveemailnews."', '', '', '')");
+			
+			
+			//$admindata = $this->db->select("*")->from("admin")->where("username",$username)->where("password",$password)->get()->row_array();
+			$memberInfo = $this->db->select("*")->from("member")->where("member_name",$member_name)->where("username",$username)->where("password",$password)->get()->row_array();
+
+			//insert into member interest group
+			$this->db->query("insert into interest 
+			values(null, '".$memberInfo['member_id']."', '".$project_group_projectgroup_id."')");
+
+			//insert
+			$this->db->query("insert into memfacebook 
+			values(null, '".$fb_id."', ".$memberInfo['member_id'].")");
+			
+
+			//success login					
+    		$this->session->set_userdata('membersession', $memberInfo);
+    		//keeplog
+			$this->noti->keeplog("member","เข้าสู่ระบบ ", $_SERVER['REQUEST_URI']);
+
+
+
+			//-----------notification------------
+			$linkpath = "main";
+			$detail = "ยินดีต้อนรับเข้ามาเป็นส่วนหนึ่งของ ให้ใจครับ";
+					
+			$this->noti->newNoti($detail, $linkpath, $memberInfo['member_id']);
+			//-----------------------------------
+			
+
+		}else{
+
+			$memberInfo = $this->db->select("*")->from("member")->where("member_id",$memberfaceInfo['member_id'])->get()->row_array();
+
+			//success login					
+    		$this->session->set_userdata('membersession', $memberInfo);
+    		//keeplog
+			$this->noti->keeplog("member","เข้าสู่ระบบ ", $_SERVER['REQUEST_URI']);
+
+
+		}
+	
+
+		
+		redirect("main");
+	
+	}
 
 
 

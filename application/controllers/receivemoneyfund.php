@@ -12,13 +12,23 @@ class receivemoneyfund extends CI_Controller{
 		$this->load->view("backend/dash/headernav.php");
 		$this->load->view("backend/dash/navcontent.php");
 
-
+		$criteriaproject_status = array('success','receivemoney'); 
+		
 		//database reference: donationlog, project, permanent_foundation, member
 		//pagination
 			$config['base_url'] = base_url()."/receivemoneyfund/index/";
 			$config['per_page'] = 10;
 			//count_all(); -> count data in table
-			$counttable = $this->db->count_all('project');
+			$counttable = $this->db->select("*")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where("project_type","ระดมทุน")
+								->where_in("project_status",$criteriaproject_status)
+								->where("project_account_id <>","")->count_all_results();
+
 			$config['total_rows'] = $counttable;
 
 
@@ -51,8 +61,16 @@ class receivemoneyfund extends CI_Controller{
 			$this->pagination->initialize($config);
 
 
-		$criteriaproject_status = array('success','receivemoney'); 
-		$data['allproject'] = $this->db->select("*, (money_raising * 100)/money_expect AS projectpercen")->from("project p")->join("project_detail d","p.project_id = d.project_project_id")->join("project_status s","p.project_id = s.project_project_id")->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")->join("member m","p.member_member_id = m.member_id")->where("project_type","ระดมทุน")->where_in("project_status",$criteriaproject_status)->where("project_account_id <>","")->get()->result_array();
+		$data['allproject'] = $this->db->select("*, (money_raising * 100)/money_expect AS projectpercen")
+								->from("project p")
+								->join("project_detail d","p.project_id = d.project_project_id")
+								->join("project_status s","p.project_id = s.project_project_id")
+								->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+								->join("member m","p.member_member_id = m.member_id")
+								->where("project_type","ระดมทุน")
+								->where_in("project_status",$criteriaproject_status)
+								->where("project_account_id <>","")
+								->get()->result_array();
 		
 		$this->load->view("backend/receivemoneyfund/receivemoneyfund.php",$data);
 		$this->load->view("backend/dash/scriptinside.php");

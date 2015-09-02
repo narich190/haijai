@@ -76,16 +76,125 @@ class manageproblem extends CI_Controller{
 		$this->load->view("backend/dash/headernav.php");
 		$this->load->view("backend/dash/navcontent.php");
 
+		
+		//get reporter_name
+		$data['reportdata'] = $this->db->select("*, (select reportm.member_name from member reportm where reportm.member_id = r.member_id) as reporter_name")->from("report r")->join("project p","r.project_id = p.project_id")->where("r.report_id",$report_id)->order_by("report_create", "desc")->get()->result_array();
+		$data['responsedata'] = $this->db->select("*")->from("response_report res")->join("report r","r.report_id = res.report_id")->where("r.report_id",$report_id)->order_by("response_create", "desc")->get()->result_array();
+
+		//project data
+		$criteriaproject_status = 'waitapprove'; 
+		$data['allproject'] = $this->db->select("*, DATEDIFF(project_end,now()) AS daycanuse, (money_raising * 100)/money_expect AS projectpercen")->from("project p")
+		->join("project_detail d","p.project_id = d.project_project_id")
+		->join("project_status s","p.project_id = s.project_project_id")
+		->join("project_group g","p.project_group_projectgroup_id = g.projectgroup_id")
+		->join("member m","p.member_member_id = m.member_id")
+		->where("project_status <>",$criteriaproject_status)
+		->get()->result_array();
+
+
+		$this->load->view("backend/manageproblem/projectproblem.php",$data);
+		$this->load->view("backend/dash/scriptinside.php");
+	}
+
+
+
+	public function projectproblemfilter(){
+		$this->load->view("backend/dash/headernav.php");
+		$this->load->view("backend/dash/navcontent.php");
+
+
+		$report_status = $this->input->post("statusfil");
+		$dfromfil = $this->input->post("datefromfil");
+		$dtofil = $this->input->post("datetofil");
+
+
+		//firsttime to filter
+		if($this->session->userdata('report_status_ssession')=="" && 
+			$this->session->userdata('projectproblemfilter_dtofil_session')=="" && 
+			$this->session->userdata('projectproblemfilter_dfromfil_session')==""){
+			
+			$ar = array(
+					"report_status_ssession"=> $report_status,
+					"projectproblemfilter_dfromfil_session"=>$dfromfil,
+					"projectproblemfilter_dtofil_session"=>$dtofil,
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+		//second time to filter
+		if(($this->session->userdata('report_status_ssession')!=$report_status  && $report_status != "")
+			|| (($this->session->userdata('projectproblemfilter_dtofil_session')!=$dtofil && $dtofil != "")
+			&& ($this->session->userdata('projectproblemfilter_dfromfil_session')!=$dfromfil && $dfromfil != ""))){
+			$ar = array(
+					"report_status_ssession"=> $this->input->post("statusfil"),
+					"projectproblemfilter_dfromfil_session"=> $this->input->post("datefromfil"),
+					"projectproblemfilter_dtofil_session"=>$this->input->post("datetofil"),
+			);
+
+			$this->session->set_userdata($ar);
+		}
+
+
+		//$pfil =  $this->session->userdata('psession');
+		$report_status =  $this->session->userdata('report_status_ssession');
+		$dfromfil = $this->input->post("datefromfil");
+		$dtofil = $this->input->post("datetofil");
+
+
+		$datecheck = "notchoose";
+	
+		if($dfromfil != "" && $dtofil != ""){$datecheck="choose";}
+
+
+		$counttable = 0;
+
+	
+		//11
+		if($report_status != "notchoose" && $datecheck != "notchoose"){
+			$counttable = $this->db->select("*")
+						->from("report r")
+							->join("project p","r.project_id = p.project_id")
+							->where("report_status",$report_status)
+							->where("SUBSTRING(r.report_create, 1, 10) >=", $dfromfil)
+							->where('SUBSTRING(r.report_create, 1, 10) <=', $dtofil)
+							->order_by("report_create", "desc")->count_all_results();
+		}
+		//10
+		else if($report_status != "notchoose" && $datecheck == "notchoose"){
+			$counttable = $this->db->select("*")
+						->from("report r")
+							->join("project p","r.project_id = p.project_id")
+							->where("report_status",$report_status)
+							->order_by("report_create", "desc")
+						->count_all_results();
+		}
+		//01
+		else if($report_status == "notchoose" && $datecheck != "notchoose"){
+			$counttable = $this->db->select("*")
+						->from("report r")
+							->join("project p","r.project_id = p.project_id")
+							->where("SUBSTRING(r.report_create, 1, 10) >=", $dfromfil)
+							->where('SUBSTRING(r.report_create, 1, 10) <=', $dtofil)
+							->order_by("report_create", "desc")
+						->count_all_results();
+		}
+		//00
+		else{
+			$counttable = $this->db->select("*")
+							->from("report r")
+							->join("project p","r.project_id = p.project_id")
+							->order_by("report_create", "desc")
+							->count_all_results();
+		}
+
+
 
 		//pagination
-			$config['base_url'] = base_url()."/manageproblem/index/";
+			$config['base_url'] = base_url()."/manageproblem/projectproblemfilter/";
 			$config['per_page'] = 10;
-			//count_all(); -> count data in table
-			$counttable = $this->db->count_all('report');
+
 			$config['total_rows'] = $counttable;
-
-
-			
 
 			//out side
 			$config['full_tag_open'] = "<ul class='pagination'>";
@@ -114,9 +223,44 @@ class manageproblem extends CI_Controller{
 
 			$this->pagination->initialize($config);
 
+
+		$data['reportdata'] = '';
+
+		$this->db->select("*, (select reportm.member_name from member reportm where reportm.member_id = r.member_id) as reporter_name");
+		$this->db->from("report r");
+		$this->db->join("project p","r.project_id = p.project_id");
+
+		//11
+		if($report_status != "notchoose" && $datecheck != "notchoose"){
+			
+						$this->db->where("report_status",$report_status);
+						$this->db->where("SUBSTRING(r.report_create, 1, 10) >=", $dfromfil);
+						$this->db->where('SUBSTRING(r.report_create, 1, 10) <=', $dtofil);
+
+		}
+		//10
+		else if($report_status != "notchoose" && $datecheck == "notchoose"){
+						$this->db->where("report_status",$report_status);
+		}
+		//01
+		else if($report_status == "notchoose" && $datecheck != "notchoose"){
+						
+						$this->db->where("SUBSTRING(r.report_create, 1, 10) >=", $dfromfil);
+						$this->db->where('SUBSTRING(r.report_create, 1, 10) <=', $dtofil);
+		}
+		//00
+		else{
+
+		}
+
+
 		//pass m is creator_name
 		//get reporter_name
-		$data['reportdata'] = $this->db->select("*, (select reportm.member_name from member reportm where reportm.member_id = r.member_id) as reporter_name")->from("report r")->join("project p","r.project_id = p.project_id")->order_by("report_create", "desc")->limit($config['per_page'],end($this->uri->segments))->get()->result_array();
+		$data['reportdata'] = $this->db->order_by("report_create", "desc")->limit($config['per_page'],end($this->uri->segments))->get()->result_array();
+		
+		
+
+
 		$data['responsedata'] = $this->db->select("*")->from("response_report res")->join("report r","r.report_id = res.report_id")->order_by("response_create", "desc")->get()->result_array();
 
 		//project data
@@ -130,9 +274,15 @@ class manageproblem extends CI_Controller{
 		->get()->result_array();
 
 
-		$this->load->view("backend/manageproblem/projectproblem.php",$data);
+		$this->load->view("backend/manageproblem/projectproblemfilter.php",$data);
 		$this->load->view("backend/dash/scriptinside.php");
 	}
+
+
+
+
+
+
 
 	public function generalproblem(){
 	

@@ -27,13 +27,13 @@
 
                     <div class="widget-head">
                         <h4 class="pull-left"><i class="fa fa-file-text"></i>สมาชิกทั้งหมด</h4>
-                        
+                        <!--
                         <div class="pull-right" style="width:10%;margin-right:10px;" >
                           <button type="button" class="btn btn-default filterbutton" onClick="showfilterbox();"  style="margin:2px 10px 2px 6px;width:100%;" aria-label="Left Align">
                             <span style="align:center" aria-hidden="true">กรองข้อมูล</span>
                           </button>
                         </div>
-
+                        -->
                         <div class="clearfix"></div>
                     </div>
 
@@ -51,6 +51,7 @@
                                 <th>รายละเอียดเพิ่มเติม</th>
                             </tr>
                             </thead>
+                            <?php /*
                             <div class="filterbox" style="width:100%;">
                               
                               <?=form_open("dash/filter");?>
@@ -79,6 +80,8 @@
                               <?=form_close();?>
 
                             </div>
+                            */
+                            ?>
 
                             <tbody>
                                     <?php 

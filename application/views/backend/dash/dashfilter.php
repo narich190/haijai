@@ -75,7 +75,7 @@
                               <div class="filter-box">
                                 <div class="form-group"  style="width:30%;display:inline-block;float:left;">
                                   <label for="exampleInputEmail1" style="margin-right:10px;float:left;">สถานะ: </label>
-                                  <select class="form-control" name="statusfil" style="width:70%;float:left;">
+                                  <select class="form-control" name="statusfil" id="statusfil" style="width:70%;float:left;">
                                     <option value="notchoose">-- ทั้งหมด --</option>
                                     <option value='waitapprove'>waitapprove</option>
                                     <option value='success'>success</option>
@@ -96,6 +96,24 @@
                               
                               </div>
                               <?=form_close();?>
+
+                              <script type="text/javascript">
+
+                                $(document).ready(function(){
+
+                                  $donation_status_ssession = "<?=($this->session->userdata('donation_status_ssession')!=''? $this->session->userdata('donation_status_ssession'):'')?>";
+
+                                  if($donation_status_ssession != ''){
+
+                                    $("select#statusfil option").each(function() { this.selected = (this.value == $donation_status_ssession); });
+          
+                                  }
+
+                                });
+
+                              </script>
+
+
 
                             </div>
 

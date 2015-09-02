@@ -27,6 +27,7 @@
 
 <!--projectfilter-->
 <div class="projectfilter" style="width:100%;height:100px;background:#30dbb5;padding:1% 2%">
+  	<?=form_open("project/filteractivity")?>
   	<div class="col-sm-8 col-sm-offset-2" style="padding:2% 2%;height:100%;">
 		<!--filter type-->
 		<div class="col-sm-2" style="text-align:left;">
@@ -34,42 +35,63 @@
 			<br><br>
 	 	</div>
 		<div class="col-sm-2" style="text-align:center;padding-left:5px;padding-right:5px;color:white;">
-			<select class="form-control" style="border:none;background:transparent;width:auto;">
-				<option>โครงการระดมสินทรัพย์</option>
-				<option>โครงการรับบริจาค</option>
-				<option>กิจกรรมประกาศ</option>
+			<select class="form-control" name='project_type' id='activity_typesession' style="border:none;background:transparent;width:auto;">
+				<option value='all'>โครงการทั้งหมด</option>
+				<option value='ระดมทุน'>โครงการระดมสินทรัพย์</option>
+				<option value='รับบริจาค'>โครงการรับบริจาค</option>
 			</select>
 	 	</div>
 
 		<div class="col-sm-2 col-sm-offset-1" style="text-align:center;padding-left:5px;padding-right:5px;color:white;">
-			<select class="form-control" style="border:none;background:transparent;width:auto;">
-				<option>ทั้งหมด</option>
-				<option>เด็ก/ สตรี/ เยาวชน</option>
-				<option>คนชรา/ คนพิการ</option>
-				<opion>ขนกลุ่มน้อย</opion>
-				<opion>คนไร้บ้าน/ ที่อยู่อาศัย</opion>
-				<opion>สิทธิมนุษยชน</opion>
-				<opion>สัตว</opion>
-				<opion>พลังงาน/ สิ่งแวดล้อม</opion>
-				<option>การศึกษา</option>
-				<option>ศาสนา/ ศิลปวัฒนธรรม</option>
-				<option>สุขภาพ/ ยา</option>
-				<option>ฉุกเฉิน/ ความปลอดภัย</option>
-				<option>ภัยพิบัติ</option>
-				<option>คอมพิวเตอร์/ IT</option>
-				<option>สื่อ/ การกระจายเสียง</option>
-				<option>กีฬา/ สันทนาการ</option>
-				<option>สวัสดิการ และ สังคม</option>
+			<select class="form-control" name='project_group_projectgroup_id' id='activity_project_group_projectgroup_ididsession' style="border:none;background:transparent;width:auto;">
+				<option value='all'>ทุกหมวดหมู่</option>
+				<option value='1'>เด็ก/ สตรี/ เยาวชน</option>
+				<option value='2'>คนชรา/ คนพิการ</option>
+				<option value='3'>ขนกลุ่มน้อย</opion>
+				<option value='4'>คนไร้บ้าน/ ที่อยู่อาศัย</opion>
+				<option value='5'>สิทธิมนุษยชน</opion>
+				<option value='6'>สัตว</opion>
+				<option value='7'>พลังงาน/ สิ่งแวดล้อม</opion>
+				<option value='8'>การศึกษา</option>
+				<option value='9'>ศาสนา/ ศิลปวัฒนธรรม</option>
+				<option value='10'>สุขภาพ/ ยา</option>
+				<option value='11'>ฉุกเฉิน/ ความปลอดภัย</option>
+				<option value='12'>ภัยพิบัติ</option>
+				<option value='13'>คอมพิวเตอร์/ IT</option>
+				<option value='14'>สื่อ/ การกระจายเสียง</option>
+				<option value='15'>กีฬา/ สันทนาการ</option>
+				<option value='16'>สวัสดิการ และ สังคม</option>
 			</select>
 	 	</div>
 
-	<div class="col-sm-2 col-sm-offset-1" style="text-align:center;padding-left:5px;padding-right:5px;color:white;">
- 		<button type="submit" class="btn btn-default">ค้นหา</button>
-	</div>
-
+		<div class="col-sm-2 col-sm-offset-1" style="text-align:center;padding-left:5px;padding-right:5px;color:white;">
+	 		<button type="submit" class="btn btn-default form-control">ค้นหา</button>
+		</div>
+	<?=form_close();?>
 	</div>
 </div>
 <!---->
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+		$activity_typesession = "<?=($this->session->userdata('activity_typesession')!=''? $this->session->userdata('activity_typesession'):'')?>";
+		$activity_project_group_projectgroup_ididsession = "<?=($this->session->userdata('activity_project_group_projectgroup_ididsession')!=''? $this->session->userdata('activity_project_group_projectgroup_ididsession'):'')?>";
+
+		if($activity_typesession != '' && $activity_project_group_projectgroup_ididsession !=''){
+		//alert($project_group_projectgroup_ididsession);
+			//$('.project_typeselect').val($project_typesession);
+
+			$("select#activity_typesession option").each(function() { this.selected = (this.value == $activity_typesession); });
+			$("select#activity_project_group_projectgroup_ididsession option").each(function() { this.selected = (this.value == $activity_project_group_projectgroup_ididsession); });
+			
+
+		}
+
+	});
+
+</script>
+
 
 
 <!--โครงการ-->
@@ -135,19 +157,19 @@
 
 		<!---->
 
-		<!--more suggest-->
+		<!--more suggest
 		    <div class="col-sm-12" style="padding-top:20px;" 
 	    	<a href="javascript:void(0);" onClick="displayoverviewall();">
 	    		<br>&nbsp&nbsp<br>
 		        <button class="btn btn-default btn-group" style="width:100%;height:50px;background:#d5d2d5;">แสดงผลเพิ่มเติม</button>
 		    </a>
-	    	</div>
+	    	</div>-->
 		</div>
 	</div> 	
 
 	<!---->
 
-<div class="row" style="width:100%;height:100px;background:#30dbb5;font-size:18;color:white;margin-top: 2cm;">
+<div class="row" style="width:100%;height:100px;background:#61DCC4;font-size:18;color:white;margin: 2cm 0 0 0;">
 <br>
   <div class="col-sm-2 col-sm-offset-2">ยอดเงินบริจาคทั้งหมด <br>&nbsp 1000000 บาท</div>
   <div class="col-sm-2 col-sm-offset-1">จำนวนผู้บริจาคทั้งหมด <br>&nbsp 3204 คน</div>
