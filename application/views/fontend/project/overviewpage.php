@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--header-->
-<header class="firstpage" style="width:100%;height:calc(50% - 90px);min-height:120px;background:url('assets/img/project/projectbg2.png') no-repeat center center fixed; 
+<header class="firstpage" style="width:100%;height:calc(50% - 90px);min-height:120px;background:url('<?=base_url()?>assets/img/project/projectbg1.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -13,11 +13,11 @@
 
 	<!--ข้อความ-->
 	<div class="col-sm-12" style="padding:5%;text-align:center;">
-		<span style="font-size:35;color:white;font-weight:50px;"><b>"ความสำเร็จ" จากพลังของคุณ</b></span>
+		<span style="font-size:35;color:white;font-weight:50px;"><b>"แรงบันดาลใจ ความฝัน ความปรารถนา"</b></span>
 		<br><br>
-		<span style="font-size:18;color:white;">ขอแค่คุณ เข้ามาเป็นส่วนหนึ่งกับเรา มาร่วมเติมเต็มความฝันของคุณ
-		 มาร่วมให้ใจ ของคุณไปด้วยกัน</span>
+		<span style="font-size:18;color:white;"><b>เราสามารถทำให้มันเป็นจริงร่วมกันได้</b></span>
 	 	<br>
+	 	
  	</div>
  	<!---->
 
@@ -119,11 +119,14 @@
 					if($value['project_type']=="ระดมทุน"){
 						echo "<span style='color:white;font-size:16'>เป้าหมาย ".$value['money_expect']." บาท </span>
 							<br>";
-					}
+						echo "<span style='color:#253747;font-size:16'>คืบหน้า ".$value['projectpercen']."% จากเป้าหมาย</span>
+							<br>";
 						echo "<span style='color:white;font-size:16'>เหลือเวลาอีก ".$value['daycanuse']." วัน</span>
 							<br>";
-					if($value['project_type']=="ระดมทุน"){
-						echo "<span style='color:#253747;font-size:16'>คืบหน้า ".$value['projectpercen']."% จากเป้าหมาย</span>
+					}
+						
+					if($value['project_type']=="รับบริจาค"){
+						echo "<span style='color:white;font-size:16'>เหลือเวลาอีก ".$value['daycanuse']." วัน</span>
 							<br>";
 					}
 				}

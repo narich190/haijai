@@ -100,7 +100,7 @@ span {
 			<br>
 			<!--ปุ่ม เข้าร่วมกับเรา-->
 			<div class="col-sm-12" style="text-align:center;padding-top:5%;">
-			 	<a href="<?=base_url()?>project" style="color:white;font-size:18;"><button class="btn btn-danger" style="width:200px;height:50px;">ดูกิจกรรมประกาศ</button></a>
+			 	<a href="<?=base_url()?>project/overviewactivity" style="color:white;font-size:18;"><button class="btn btn-danger" style="width:200px;height:50px;">ดูกิจกรรมประกาศ</button></a>
 			</div>
 			<!---->
 

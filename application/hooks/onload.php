@@ -15,7 +15,7 @@ class onload{
 		$method = $this->ci->router->method;
 
 		
-		if(($controller == 'dash' || $controller == 'manageproject' || $controller == 'managemember')){
+		if(($controller == 'dash' || $controller == 'managemember')){
 			if($this->ci->session->userdata('adminsession')==null){
 				//echo "login";
 				if($method != "login"){

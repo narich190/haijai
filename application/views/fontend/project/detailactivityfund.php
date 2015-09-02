@@ -1,5 +1,5 @@
 <!--header-->
-<header class="detailmainprojectfund" style="width:100%;min-height:230px;background:url('<?=base_url()?>assets/img/project/header/<?=$detailproject[0]['img_detailpath']?>') no-repeat center center fixed; 
+<header class="detailmainprojectfund" style="width:100%;min-height:230px;background:url('<?=base_url()?>assets/img/activity/header/<?=$detailproject[0]['activityheaderpath']?>') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -134,8 +134,6 @@
 				<span style='font-size:16;color:#333333;padding:0;'>จำนวนคนสนับสนุน ".$detailproject[0]['peopledonate']." คน</span><br>
 				<span style='font-size:16;color:#333333;padding:0;'>เป้าหมาย <span  style='font-size:16;color:#333333;padding:0;' style='font-size:10;color:#333333;padding:0;'><b>".$detailproject[0]['money_expect']."</b></span> บาท</span><br>";
 		
-			echo "<span style='font-size:16;color:#333333;padding:0;'>เหลืออีก".$detailproject[0]['daycanuse']." วัน</span><br>";
-		
 			echo "<span style='font-size:12;color:#333333;padding:0;text-align:left;'>".$detailproject[0]['projectpercen']."%</span><br>
 				<div class='progress' style='width:100%;'>
 					<div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='".$detailproject[0]['projectpercen']."' aria-valuemin='0' aria-valuemax='100' style='width:".$detailproject[0]['projectpercen']."%'>
@@ -144,56 +142,12 @@
 				</div>";
 		}else{
 
-			echo "<span style='font-size:25;color:#253747;padding:0;'><b>เหลืออีก".$detailproject[0]['daycanuse']." วัน</b></span><br>";  
 			echo "<span style='font-size:16;color:#333333;padding:0;'><u>สิ่งของที่ต้องการ</u><br> ".$detailproject[0]['item_expect']." คน</span><br>";
 
 		}
 		?>
 
-		<div class="col-sm-12 fundbutton" style="padding:0;" style="display:none;">
-				<?php
-					if($this->session->userdata('membersession')!=""){	
-				?>
-					<button class="btn btn-success" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#donationbutton"style="width:100%;">
-						ร่วมระดมสินทรัพย์
-					</button>
-				<?php }
-				else{
-				?>
-					<a href="javascript:void(0)" onclick="goToRegister()">
-						<button class="btn btn-success" class="btn btn-primary btn-lg" type="button"  style="width:100%;">
-							ร่วมบริจาค
-						</button>
-					</a>
-					
-				<?php }?>
-				<!-- donation -->
-				<div class="modal fade" id="donationbutton" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-					<div class="modal-dialog" role="document"  >
-					    <div class="modal-content">
-					    	<div class="modal-header" style="background:#4A90E2;color:white;">
-					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        	<h4 class="modal-title" id="myModalLabel">เลือกช่องทางในการชำระเงิน</h4>
-					      	</div>
-					      	<div class="modal-body" style="width:100%;height:320px;padding:30;">
-					      		<a href="<?=base_url()?>project/checkout/<?=$detailproject[0]['project_id']?>/bank">
-						        	<div class="choosebank" style="width:50%;float:left;">
-						        		<img src="<?=base_url()?>assets/img/project/bank.jpg" style="width:100%;height:100%;position:relative;" />
-						        		<div class="choosebankselected" style="width:45%;height:80%;background:gray;opacity:0.2;z-index:2;position:absolute;top:10%;display:none;"></div>
-						        	</div>
-						        </a>
-						        <a href="<?=base_url()?>project/checkout/<?=$detailproject[0]['project_id']?>/paysbuy">
-						        	<div class="choosepaysbuy" style="width:50%;float:left;">
-						        		<img src="<?=base_url()?>assets/img/project/paysbuylogo.jpg" style="width:100%;height:100%;" />
-						        		<div class="choosepaysbuyselected" style="width:45%;height:80%;background:gray;opacity:0.2;z-index:2;position:absolute;top:10%;display:none;"></div>
-						        	</div>
-						        </a>
-					      	</div>
-					    </div>
-				  	</div>
-				</div>
-		</div>
-		<br>
+		
 		<span style="font-size:16;color:#333333;padding:0;"><br>สร้างโดย</span><br>
 			
 		<!--ผู้สร้าง-->
@@ -223,50 +177,29 @@
             }
 		?>
 		<span style="font-size:16;color:#253747;padding:0;">
-			<b>รายละเอียดโครงการ</b>
+			<b>รายละเอียดกิจกรรมประกาศ</b>
 			<br>
-			&nbsp; &nbsp; &nbsp;<?=$detailproject[0]['project_deepdetail']?>
+			&nbsp; &nbsp; &nbsp;<?=$detailproject[0]['activity_deepdetail']?>
 			<br>
 		</span>
 		<br>
 		<span style="font-size:16;color:#253747;padding:0;">
 			<b>ดูวีดีโอของเราบนยูทูปได้ที่นี่</b>
 			<br>
-			&nbsp; &nbsp; &nbsp;<a href="<?=$detailproject[0]['video_detailpath']?>"><?=($detailproject[0]['video_detailpath']!='' ? $detailproject[0]['video_detailpath'] : '-' )?></a>
+			&nbsp; &nbsp; &nbsp;<a href="<?=$detailproject[0]['activityvideo']?>"><?=($detailproject[0]['activityvideo']!='' ? $detailproject[0]['activityvideo'] : '-' )?></a>
 		</span>
 		<br>
 		<span style="font-size:16;color:#253747;padding:0;">
-			<b>กลุ่มเป้าหมาย</b>
+			<b>เอกสารประกอบกิจกรรมประกาศ</b>
 			<br>
-			&nbsp; &nbsp; &nbsp;<?=$detailproject[0]['project_target']?>
-			<br>
-		</span>
-		<br>
-		<span style="font-size:16;color:#253747;padding:0;">
-			<b>วัตถุประสงค์</b>
-			<br>
-			&nbsp; &nbsp; &nbsp;<?=$detailproject[0]['project_object']?>
+			&nbsp; &nbsp; &nbsp;	<a href="<?=base_url()?>assets/img/project/documentproject/<?=$detailproject[0]['project_pdfpath']?>"><?=($detailproject[0]['activity_pdfpath']!='' ? $detailproject[0]['project_name'] : '-' )?></a>
 			<br>
 		</span>
 		<br>
 		<span style="font-size:16;color:#253747;padding:0;">
-			<b>สถานที่จัดทำโครงการ</b>
+			<b>ดูโครงการ</b>
 			<br>
-			&nbsp; &nbsp; &nbsp;แขวง<?=$detailproject[0]['subdisdrict']?> เขต<?=$detailproject[0]['district']?> จังหวัด<?=$detailproject[0]['country']?> ประเทศ<?=$detailproject[0]['province']?>
-			<br>
-		</span>
-		<br>
-		<span style="font-size:16;color:#253747;padding:0;">
-			<b>วันที่คาดว่าจะจัดทำโครงการ</b>
-			<br>
-			&nbsp; &nbsp; &nbsp;<?=$detailproject[0]['project_realstart']?>
-			<br>
-		</span>
-		<br>
-		<span style="font-size:16;color:#253747;padding:0;">
-			<b>เอกสารประกอบโครงการ</b>
-			<br>
-			&nbsp; &nbsp; &nbsp;	<a href="<?=base_url()?>assets/img/project/documentproject/<?=$detailproject[0]['project_pdfpath']?>"><?=($detailproject[0]['project_pdfpath']!='' ? $detailproject[0]['project_name'] : '-' )?></a>
+			&nbsp; &nbsp; &nbsp;	<a href="<?=base_url()?>project/detailprojectfund/<?=($detailproject[0]['project_id'])?>"><?=($detailproject[0]['project_name'])?></a>
 			<br>
 		</span>
 
