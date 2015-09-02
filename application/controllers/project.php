@@ -52,9 +52,7 @@ class project extends CI_Controller{
 		//comment
 		$data['commentprojectdata'] = $this->db->select("*")->from("project_comment c")->join("member m","m.member_id = c.member_member_id")->join("project p","c.project_project_id = p.project_id")->where("project_project_id",$project_id)->order_by("comment_create","desc")->get()->result_array();
 		$data['member_logindata'] = $this->db->select("*")->from("member")->where("member_id",$member_id)->get()->row_array();
-
-		$data['checkStaff'] = $this->db->select("*")->from("memrefproject")->where("project_id",$project_id)->where("status","ยินยอมเป็นสต๊าฟ")->get()->result_array();
-
+		
 		$this->load->view("fontend/project/detailprojectfund.php",$data);
 
 		$this->load->view("fontend/topandfooter/bottomfooter.php");

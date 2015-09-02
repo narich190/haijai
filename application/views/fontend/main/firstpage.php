@@ -73,10 +73,10 @@ span {
 			<span style="font-size:35;color:white;"><b>Haijai เชื่อว่ายังมีคนอีกมากต้องการความช่วยเหลือ</b></span>
 			<br><br>
 			<span style="font-size:18;color:white;">เราไม่เคยหยุดมองหาโอกาสที่จะช่วยเหลือคน 
-เพราะเราอยากให้คนที่ต้องการความช่วยเหลือ 
-ได้รับการช่วยเหลืออย่างทั่วถึง มันเป็นเหตุผลที่ทำ
-ให้เรามีการรับฟังความคิดเห็น ข้อเสนอแนะ
-อัพเดทข่าวสารโครงการใหม่ๆอยู่ตลอดเวลา</span>
+													เพราะเราอยากให้คนที่ต้องการความช่วยเหลือ 
+													ได้รับการช่วยเหลืออย่างทั่วถึง มันเป็นเหตุผลที่ทำ
+													ให้เรามีการรับฟังความคิดเห็น ข้อเสนอแนะ
+													อัพเดทข่าวสารโครงการใหม่ๆอยู่ตลอดเวลา</span>
 		 	<br>
 	 	</div>
 
@@ -88,11 +88,11 @@ span {
 
 
 <!--activity-->
-<div class="mainactivityhaijai" style="width:100%;min-height:400px;background:#179B49;">
+<div class="mainactivityhaijai" style="width:100%;min-height:400px;background:#30dbb5;">
   
 	<div class="col-sm-12" style="padding-right:0;">
 		<!--ส่วนซ้ายให้ใจคือใคร-->
-		<div class="col-sm-6 col-sm-offset-3" style="text-align:center;padding:7% 8%">
+		<div class="col-sm-6 col-sm-offset-3" style="text-align:center;padding:4% 3%">
 			<span style="font-size:35;color:white;"><b>กิจกรรมและเรื่องราวความสำเร็จที่เคยผ่านมา</b></span>
 			<br><br>
 			<span style="font-size:18;color:white;">เรื่องราวดีๆที่เราทุกคนอยากบอกต่อ เเล้วคุณ
@@ -116,7 +116,7 @@ span {
 
 
 <!--โครงการ-->
-<div class="mainproject" style="width:100%;min-height:1200px;background:#FFFFFF;padding:0% 8% 7% 4%;">
+<div class="mainproject" style="width:100%;min-height:1200px;background:#f7f7ea;padding:0% 8% 7% 4%;">
 	<!--ข้อความ-->
 	<div class="col-sm-12" style="padding:5% 5% 1% 5%;text-align:center;width:100%;">
 		<span style="font-size:35;color:#253747;"><b>ไม่สำคัญว่าคุณจะเป็นใคร</b></span>
@@ -157,24 +157,24 @@ span {
 				
 				//change color when hover
 				if ($round == 1){
-					echo "<div class='previewproject1  ' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#0FA3F2;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 29px);height:calc(100% - 20px);background:pink;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";	
+
 				}else if ($round == 2){
-					echo "<div class='previewproject1  ' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#d9534f;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 29px);height:calc(100% - 29px);background:#d9534f;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
 				}
 				else if ($round == 3){
-					echo "<div class='previewproject1 ' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#89D3CC;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 29px);height:calc(100% - 29px);background:#89D3CC;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
 				}
 				
-				
 
-				echo "<span style='color:white;font-size:16;'>".$value['project_preview']."</span>
+				echo "<span style='color:white;font-size:16px;'>".$value['project_preview']."</span>
 						<br><br>
 						<a href='".base_url()."project/detailprojectfund/".$value['project_id']."'><button class='btn btn-primary'>ดูเพิ่มเติม</button></a>
 					</div>
 					<a href='#'>
 						<div>
 							<!--img project-->
-							<img class='image-responsive' src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."' style='width:100%;position:relative;' />
+							<img class='image-responsive' src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."'style='height:20%;width:100%;position:relative;min-height:230px;' />
 							
 							
 						</div>
@@ -203,12 +203,23 @@ span {
 						else{
 							if($value['project_type']=="ระดมทุน"){
 								echo "<span style='color:white;font-size:16'>เป้าหมาย ".$value['money_expect']." บาท </span>
-									<br>";
+									  <br>";
 							}
 								echo "<span style='color:white;font-size:16'>เหลือเวลาอีก ".$value['daycanuse']." วัน</span>
 									<br>";
+
 							if($value['project_type']=="ระดมทุน"){
-								echo "<span style='color:#253747;font-size:16'>คืบหน้า ".$value['projectpercen']."% จากเป้าหมาย</span>
+								echo "<span style='color:#253747;font-size:16'>คืบหน้า ".$value['projectpercen']."% จากเป้าหมาย <br></spa	n><br>
+							
+						<div class='progress' style='width:100%;'>
+							<div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='".$fundproject[0]['projectpercen']."' aria-valuemin='0' aria-valuemax='100' style='width:".$fundproject[0]['projectpercen']."%'>
+				    		<span class='sr-only'>".$fundproject[0]['projectpercen']."% Complete</span>
+
+				  			</div>
+						</div>	
+								</span>
+								
+
 									<br>";
 							}
 						}
@@ -232,7 +243,7 @@ span {
 
 		<?php
 			if (count($donationproject)==0){
-				echo "<div class='col-sm-12 previewviewproject1' style='padding-top:20px;position:relative;'>";
+				echo "<div class='col-sm-12 previewviewproject1' style='padding-top:10px;position:relative;'>";
 					echo "<h5 style='text-align:center;'>ยังไม่มีโครงการรับบริจาคในขณะนี้</h5>";
 				echo "</div>";
 			}
@@ -243,15 +254,16 @@ span {
 				/*----------------Question: How to display project that success or receivemoney ?----------------*/
 				
 				echo "<div class='col-sm-4 previewviewproject1' style='padding-top:20px;position:relative;'>";
+
 				
 				if ($round == 4){
-					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#FF833D;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 29px);height:calc(100% - 20px);background:pink;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";	
 				}
 				else if ($round == 5){
-					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#54C381;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 20px);background:#54C381;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
 				}
 				else if ($round == 6){
-					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 15px);background:#FCB910;z-index:10;opacity:0;text-align:center;padding:40% 5%;'>";
+					echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 20px);background:#FCB910;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
 				}
 				
 
@@ -262,7 +274,7 @@ span {
 					<a href='#'>
 						<div style='max-width:100%;'>
 							<!--img project-->
-							<img src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."' style='width:100%;position:relative;' />
+							<img class='image-responsive' src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."'style='height:20%;width:100%;position:relative;min-height:230px;' />
 							
 						</div>
 					</a>";
@@ -318,10 +330,10 @@ span {
 
 
 <!--โครงการ responsive-->
-<div class="mainprojectresponsive" style="width:100%;height:120%;background:#FFFFFF;padding:0% 8% 7% 4%;">
+<div class="mainprojectresponsive" style="width:100%;height:120%;background:#d5d2d5;padding:0% 8% 7% 2%;">
 	<!--ข้อความ-->
 	<div class="col-sm-12" style="padding:5% 5% 1% 5%;text-align:center;width:100%;">
-		<span style="font-size:35;color:#253747;"><b>ไม่สำคัญว่าคุณจะเป็นใคร</b></span>
+		<span style="font-size:35;color:#d5d2d5;"><b>ไม่สำคัญว่าคุณจะเป็นใคๅร</b></span>
 	 	<br>
  	</div>
 

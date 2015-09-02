@@ -94,7 +94,7 @@
 		
 		//change color when hover
 
-		echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 30px);height:calc(100% - 20px);background:pink;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
+		echo "<div class='previewproject1' style='position:absolute;width:calc(100% - 29px);height:calc(100% - 20px);background:pink;z-index:10;opacity:0;text-align:center;padding:40% 0%;'>";
 		echo "<span style='color:white;font-size:16;'>".$value['project_preview']."</span>
 				<br><br>
 				<a href='".base_url()."project/detailprojectfund/".$value['project_id']."'><button class='btn btn-primary'>ดูเพิ่มเติม</button></a>
@@ -102,7 +102,7 @@
 			<a href='#'>
 				<div style='max-width:100%;'>
 					<!--img project-->
-					<img src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."' style='height:20%;width:100%;position:relative;min-height:230px;' />
+					<img src='".base_url()."assets/img/project/profile/".$value['img_previewpath']."'style='height:20%;width:100%;position:relative;min-height:230px;' />
 					
 				</div>
 			</a>";

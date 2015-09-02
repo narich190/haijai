@@ -10,7 +10,7 @@ html{
 }  
 div#map_canvas{  
     margin:auto;  
-    width:600px;  
+    width:800px;  
     height:230px;  
     overflow:hidden;  
 }  
@@ -26,7 +26,7 @@ div#map_canvas{
 	p.normal {
 		font-style: normal;   
 	}
-	p.italic {
+	p.italic 
 		font-style: italic;
 	}
 	p.oblique {
@@ -39,7 +39,8 @@ div#map_canvas{
 	<div class="container" style="padding:40px;margin:0;">
 		<!--ข้อมูลติดต่อ-->
 		<div class="col-sm-12" style="padding:0;">
-			<div class="col-sm-8">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-6">
 				<br>
 				<br>
 				<p class="italic"><span style="font-size:35;">CONTACT US</span></p>
@@ -51,10 +52,11 @@ div#map_canvas{
 					<span><a href=https://www.google.co.th>เกี่ยวกับเรา</a></span>&nbsp
 					<span><a href=https://www.google.co.th>นโยบายของเรา</a></span>&nbsp	
 					<span><a href=https://www.google.co.th>รายงานปัญหาทั่วไป</a></span>&nbsp
+					<span><a href=https://www.google.co.th>ช่วยเหลือ</a></span>&nbsp
 				<br>
 			</div>
-			<div class="col-sm-4" style="padding-top:5px;margin:0;">
-				<span><div id="map_canvas" style='width:100%;padding:0;'></div></span>
+			<div class="col-sm-4" style="padding-right:50px;margin:0;">
+				<span><div id="map_canvas" style='width:350px;padding:20px;'></div></span>
 			</div>
 		</div>
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAcNvUk-nhOGHxtqYjlYDTRRQIRG6yKtEoODg8BfMKCyHqWgeYjhTbSKxVXskDpcNKx0i7Msr1-E1jhg" type="text/javascript"></script>  
