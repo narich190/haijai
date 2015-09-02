@@ -118,6 +118,12 @@
 							<br>";
 						echo "<span style='color:#253747;font-size:16'>ทำได้ ".$value['projectpercen']."% จากเป้าหมาย</span>
 							<br>";
+						echo "<div class='progress' style='width:100%;'>
+							<div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='".$value['projectpercen']."' aria-valuemin='0' aria-valuemax='100' style='width:".$value['projectpercen']."%'>
+				    		<span class='sr-only'>".$value['projectpercen']."% Complete</span>
+
+				  			</div>
+						</div>	";
 					}
 						
 				
