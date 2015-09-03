@@ -48,7 +48,7 @@
 
 				<!--share FB-->
 				<br>
-				<div class="col-sm-2" style="padding:0;"><button class="btn btn-primary" style="width:100%;">แชร์&nbsp;<i class="fa fa-facebook-official"></i></button></div>
+				<div class="col-sm-2" style="padding:0;"><a href='<?=base_url()?>project/postFB/<?=$detailproject[0]['project_project_id']?>/activity'><button class="btn btn-primary" style="width:100%;">แชร์&nbsp;<i class="fa fa-facebook-official"></i></button></a></div>
 				
 				<!--follow-->
 				<?php

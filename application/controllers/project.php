@@ -1,8 +1,23 @@
 <?php
+
 class project extends CI_Controller{
 
-	public function project(){
+	private $uid;
+
+	private $access_token;
+
+	public function __construct()
+	{
 		parent::__construct();
+
+		$this->load->library("session");
+		$this->load->library("facebook",array(
+			"appId"=>"878498028884904",
+			"secret"=>"d90e3135b2566f7ace704f6725ccaaa9"
+			));
+		$this->uid = $this->facebook->getUser();
+		$this->access_token = $this->facebook->getAccessToken();
+		$this->facebook->setAccessToken($this->access_token);
 	}
 
 	public function index(){
@@ -1168,6 +1183,70 @@ class project extends CI_Controller{
 
 
 
+	}
+
+	public function postFB($project_id, $project_action){
+
+		$project_info = $this->db->select("*")->from("project")->where("project_id",$project_id)->get()->row_array();
+
+		$pathShare = 'http://localhost/haijai/project/detailprojectfund/'.$project_id;
+		$messageDetail = "ฉันอยากจะเชิญชวนทุกคนมาร่วมให้ใจให้โอกาสกับ\n โครงการ".$project_info['project_name']." ร่วมกัน \nดูรายละเอียดได้ที่: ".$pathShare;
+		if($project_action == 'activity'){
+			$pathShare = 'http://localhost/haijai/project/detailactivity/'.$project_id;
+			$messageDetail = "อีกหนึ่งความสำเร็จของการแบ่งปัน โครงการ".$project_info['project_name']."\nดูรายละเอียดได้ที่: ".$pathShare;
+		}
+
+
+
+		
+			  // Remember to copy files from the SDK's src/ directory to a
+				  // directory in your application on the server, such as php-sdk/
+				  //require_once('assests/facebook-php-sdk/src/facebook.php');
+
+				  $config = array(
+				    'appId' => '878498028884904',
+				    'secret' => 'd90e3135b2566f7ace704f6725ccaaa9',
+				    'allowSignedRequest' => false // optional but should be set to false for non-canvas apps
+				  );
+
+				  $facebook = new Facebook($config);
+				  $user_id = $facebook->getUser();
+				    if($user_id) {
+
+				      // We have a user ID, so probably a logged in user.
+				      // If not, we'll get an exception, which we handle below.
+				      try {
+				        $ret_obj = $facebook->api('/me/feed', 'POST',
+				                                    array(
+				                                      'link' => $pathShare,
+				                                      'message' => $messageDetail,
+				                                 ));
+				        echo '<pre>Post ID: ' . $ret_obj['id'] . '</pre>';
+
+				        // Give the user a logout link 
+				        echo '<br /><a href="' . $facebook->getLogoutUrl() . '">logout</a>';
+				      } catch(FacebookApiException $e) {
+				        // If the user is logged out, you can have a 
+				        // user ID even though the access token is invalid.
+				        // In this case, we'll get an exception, so we'll
+				        // just ask the user to login again here.
+				        $login_url = $facebook->getLoginUrl( array(
+				                       'scope' => 'publish_actions'
+				                       )); 
+				        echo 'Please <a href="' . $login_url . '">login.</a>';
+				        error_log($e->getType());
+				        error_log($e->getMessage());
+				      }   
+				    } else {
+
+				      // No user, so print a link for the user to login
+				      // To post to a user's wall, we need publish_actions permission
+				      // We'll use the current URL as the redirect_uri, so we don't
+				      // need to specify it here.
+				      $login_url = $facebook->getLoginUrl( array( 'scope' => 'publish_actions' ) );
+				      echo 'Please <a href="' . $login_url . '">login.</a>';
+
+				    } 
 	}
 
 
